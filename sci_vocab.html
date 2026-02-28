@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scientific Vocabulary as a Language System | Foundations: Closing the Gap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --accent: #2E7D6F;
+  --accent-light: #E0F2EE;
+  --accent-dark: #1B5E50;
+  --bg: #FAFAF7;
+  --card-bg: #FFFFFF;
+  --text: #2C2C2C;
+  --text-muted: #6B6B6B;
+  --border: #E8E5DE;
+  --warm: #F5F0E8;
+  --highlight: #FFF8E7;
+  --code-bg: #F4F1EB;
+  --serif: 'Crimson Pro', Georgia, serif;
+  --sans: 'Source Sans 3', 'Segoe UI', sans-serif;
+  --mono: 'JetBrains Mono', 'Consolas', monospace;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.1);
+  --radius: 10px;
+  /* Series accent: deep indigo/slate — distinct from math amber and compass teal */
+  --theme: #3D3580;
+  --theme-light: #EEEDF8;
+  --theme-dark: #2A2460;
+  --theme-glow: rgba(61,53,128,0.10);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 17px; }
+body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.72; -webkit-font-smoothing: antialiased; }
+
+.series-banner {
+  background: var(--accent-dark);
+  color: rgba(255,255,255,0.85);
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.45rem 1rem;
+}
+.series-banner span { color: #A8D8D1; }
+
+.hero {
+  background: linear-gradient(135deg, #1A1650 0%, #3D3580 45%, #5548B0 100%);
+  color: white;
+  padding: 4rem 2rem 3.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(ellipse at 30% 50%, rgba(255,255,255,0.07) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 20%, rgba(255,255,255,0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero h1 { font-family: var(--serif); font-size: 2.8rem; font-weight: 700; margin-bottom: 0.6rem; letter-spacing: -0.02em; position: relative; }
+.hero .subtitle { font-size: 1.15rem; opacity: 0.92; max-width: 680px; margin: 0 auto 1.5rem; line-height: 1.6; position: relative; }
+.hero .byline { font-size: 0.88rem; opacity: 0.75; position: relative; font-style: italic; font-family: var(--serif); }
+
+.tab-nav {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem;
+  padding: 1rem 1.5rem; background: var(--card-bg);
+  border-bottom: 2px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.tab-btn {
+  font-family: var(--sans); font-size: 0.88rem; font-weight: 600;
+  padding: 0.55rem 1.1rem; border: 2px solid transparent; border-radius: 8px;
+  background: var(--warm); color: var(--text-muted); cursor: pointer; transition: all 0.25s ease; white-space: nowrap;
+}
+.tab-btn:hover { border-color: var(--theme); color: var(--theme); }
+.tab-btn.active { background: var(--theme); color: white; border-color: var(--theme); }
+
+.container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+.tab-panel { display: none; animation: fadeUp 0.4s ease; }
+.tab-panel.active { display: block; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+.card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; margin-bottom: 1.5rem; box-shadow: var(--shadow); transition: box-shadow 0.3s ease; }
+.card:hover { box-shadow: var(--shadow-lg); }
+.card h2 { font-family: var(--serif); font-size: 1.65rem; font-weight: 700; color: var(--theme-dark); margin-bottom: 1rem; line-height: 1.3; }
+.card h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--theme); margin: 1.4rem 0 0.6rem; }
+.card h4 { font-family: var(--sans); font-size: 1rem; font-weight: 700; color: var(--theme-dark); margin: 1rem 0 0.4rem; }
+.card p { margin-bottom: 0.9rem; }
+.card ul, .card ol { padding-left: 1.4rem; margin-bottom: 0.9rem; }
+.card li { margin-bottom: 0.45rem; line-height: 1.65; }
+
+.callout { background: var(--accent-light); border-left: 4px solid var(--accent); padding: 1.2rem 1.4rem; border-radius: 0 var(--radius) var(--radius) 0; margin: 1.2rem 0; font-size: 0.97rem; }
+.callout.warm { background: var(--highlight); border-left-color: #D4A843; }
+.callout.honest { background: #FFF0F0; border-left-color: #C25B56; }
+.callout.theme { background: var(--theme-light); border-left-color: var(--theme); }
+.callout strong { color: var(--accent-dark); }
+.callout.warm strong { color: #8B6914; }
+.callout.honest strong { color: #993333; }
+.callout.theme strong { color: var(--theme-dark); }
+
+/* ROOT ANATOMY DIAGRAM */
+.word-anatomy {
+  background: var(--theme-light);
+  border: 2px solid var(--theme);
+  border-radius: var(--radius);
+  padding: 1.6rem;
+  margin: 1.2rem 0;
+  text-align: center;
+}
+.word-anatomy .full-word {
+  font-family: var(--serif);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--theme-dark);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.8rem;
+}
+.word-anatomy .breakdown {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: nowrap;
+  margin-bottom: 0.8rem;
+}
+.word-part {
+  padding: 0.5rem 0.9rem;
+  font-family: var(--mono);
+  font-size: 1rem;
+  font-weight: 500;
+  border: 2px solid;
+  position: relative;
+}
+.word-part.prefix { background: #E8E4FF; border-color: #7B6FD0; color: #3D3580; border-right: none; border-radius: 8px 0 0 8px; }
+.word-part.root { background: #D4F0EB; border-color: var(--accent); color: var(--accent-dark); }
+.word-part.suffix { background: #FFF3CD; border-color: #D4A843; color: #7A5C00; border-left: none; border-radius: 0 8px 8px 0; }
+.word-anatomy .labels {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+}
+.part-label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0 0.9rem;
+  color: var(--text-muted);
+}
+.part-label.prefix { color: #3D3580; min-width: 80px; }
+.part-label.root { color: var(--accent-dark); min-width: 80px; }
+.part-label.suffix { color: #7A5C00; min-width: 80px; }
+.word-meaning {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+/* ROOT TABLES */
+.root-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.92rem;
+}
+.root-table th {
+  background: var(--theme);
+  color: white;
+  font-family: var(--sans);
+  font-weight: 600;
+  padding: 0.65rem 0.85rem;
+  text-align: left;
+}
+.root-table td { padding: 0.6rem 0.85rem; border: 1px solid var(--border); vertical-align: top; }
+.root-table tr:nth-child(even) td { background: var(--warm); }
+.root-table tr:hover td { background: var(--theme-light); }
+.root-table .key { font-family: var(--mono); font-weight: 600; color: var(--theme-dark); font-size: 0.95rem; }
+.root-table .examples { color: var(--text-muted); font-size: 0.87rem; }
+
+/* WORD BUILD BOX */
+.word-build {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--theme);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 1rem 1.3rem;
+  margin: 0.7rem 0;
+  font-size: 0.95rem;
+}
+.word-build .wb-word {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--theme-dark);
+  margin-bottom: 0.3rem;
+}
+.word-build .wb-parts {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--theme);
+  margin-bottom: 0.25rem;
+}
+.word-build .wb-meaning { font-size: 0.92rem; color: var(--text-muted); }
+
+/* DEFINITION */
+.definition { background: var(--code-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.3rem; margin: 0.8rem 0; font-size: 0.95rem; }
+.definition .term { font-family: var(--mono); font-weight: 500; color: var(--theme); font-size: 0.9rem; }
+.definition .meaning { margin-top: 0.3rem; color: var(--text); }
+
+/* REFLECTION */
+.reflection { background: linear-gradient(135deg, var(--warm) 0%, #F9F4EC 100%); border: 2px solid #D4C5A9; border-radius: var(--radius); padding: 1.5rem 1.8rem; margin: 1.5rem 0; }
+.reflection h3 { font-family: var(--serif); color: #8B6914; margin-bottom: 0.8rem; }
+.reflection .q { padding: 0.6rem 0; border-bottom: 1px solid rgba(0,0,0,0.06); font-size: 0.97rem; display: flex; align-items: flex-start; gap: 0.6rem; }
+.reflection .q:last-child { border-bottom: none; }
+.reflection .q-num { font-family: var(--mono); font-size: 0.82rem; color: var(--theme); font-weight: 500; flex-shrink: 0; margin-top: 0.1rem; }
+
+/* WISDOM */
+.wisdom { font-family: var(--serif); font-style: italic; font-size: 1.15rem; text-align: center; color: var(--theme-dark); padding: 1.5rem 2rem; margin: 1.5rem 0; border-top: 2px solid var(--theme-light); border-bottom: 2px solid var(--theme-light); line-height: 1.6; }
+.wisdom .attribution { font-size: 0.85rem; color: var(--text-muted); font-style: normal; margin-top: 0.4rem; display: block; }
+
+/* STEPS */
+.steps { margin: 1rem 0; }
+.step { display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+.step:last-child { border-bottom: none; }
+.step-num { background: var(--theme); color: white; font-family: var(--mono); font-size: 0.85rem; font-weight: 700; width: 2rem; height: 2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.15rem; }
+.step-body strong { display: block; font-size: 1rem; color: var(--theme-dark); margin-bottom: 0.25rem; }
+.step-body p { margin: 0; font-size: 0.95rem; }
+
+/* SYLLABLE BOXES */
+.syllable-demo {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0.8rem 0;
+}
+.syl {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding: 0.4rem 0.6rem;
+  background: var(--theme-light);
+  border: 1px solid var(--theme);
+  color: var(--theme-dark);
+  border-radius: 4px;
+}
+.syl-sep { font-size: 1rem; color: var(--text-muted); padding: 0 0.1rem; }
+.syl.stress { background: var(--theme); color: white; }
+
+/* QUIZ */
+.quiz-container { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); }
+.quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem; }
+.quiz-header h3 { font-family: var(--serif); font-size: 1.3rem; color: var(--theme); margin: 0; }
+.quiz-score { font-family: var(--mono); font-size: 0.85rem; color: var(--text-muted); background: var(--warm); padding: 0.3rem 0.8rem; border-radius: 6px; }
+.quiz-question { font-size: 1.05rem; font-weight: 600; margin-bottom: 1.2rem; line-height: 1.5; color: var(--text); }
+.quiz-options { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.2rem; }
+.quiz-option { padding: 0.85rem 1.2rem; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 0.97rem; transition: all 0.2s; background: var(--card-bg); text-align: left; font-family: var(--sans); }
+.quiz-option:hover:not(:disabled) { border-color: var(--theme); background: var(--theme-light); }
+.quiz-option.correct { border-color: var(--accent); background: var(--accent-light); color: var(--accent-dark); font-weight: 600; }
+.quiz-option.wrong { border-color: #C25B56; background: #FFF0F0; color: #993333; }
+.quiz-option:disabled { cursor: default; }
+.quiz-explanation { background: var(--warm); border-left: 4px solid var(--theme); padding: 1rem 1.2rem; border-radius: 0 8px 8px 0; font-size: 0.93rem; margin-bottom: 1rem; display: none; line-height: 1.65; }
+.quiz-explanation.show { display: block; }
+.quiz-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; }
+.quiz-btn { background: var(--theme); color: white; border: none; padding: 0.65rem 1.5rem; border-radius: 8px; font-family: var(--sans); font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: filter 0.2s; }
+.quiz-btn:hover { filter: brightness(1.1); }
+.quiz-btn:disabled { background: var(--text-muted); cursor: default; filter: none; }
+.quiz-progress { font-size: 0.85rem; color: var(--text-muted); font-family: var(--mono); }
+.progress-bar-wrap { background: var(--border); border-radius: 6px; height: 8px; margin: 0.5rem 0 1rem; overflow: hidden; }
+.progress-bar { height: 100%; background: linear-gradient(90deg, var(--theme), #7B70D0); border-radius: 6px; transition: width 0.5s ease; }
+.quiz-final { text-align: center; padding: 2rem; display: none; }
+.quiz-final.show { display: block; }
+.quiz-final-score { font-family: var(--serif); font-size: 3rem; font-weight: 700; color: var(--theme); margin-bottom: 0.5rem; }
+.quiz-final-msg { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6; }
+.quiz-restart { background: var(--theme); color: white; border: none; padding: 0.75rem 2rem; border-radius: 8px; font-family: var(--sans); font-size: 1rem; font-weight: 600; cursor: pointer; }
+
+/* FLASHCARDS */
+.flashcard-controls { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.2rem; align-items: center; }
+.fc-filter { font-family: var(--sans); font-size: 0.82rem; font-weight: 600; padding: 0.35rem 0.85rem; border: 2px solid var(--border); border-radius: 6px; background: var(--warm); color: var(--text-muted); cursor: pointer; transition: all 0.2s; }
+.fc-filter:hover, .fc-filter.active { border-color: var(--theme); color: var(--theme); background: var(--theme-light); }
+.fc-count { margin-left: auto; font-size: 0.82rem; color: var(--text-muted); font-family: var(--mono); }
+.flashcard-scene { perspective: 1000px; height: 210px; margin-bottom: 1.2rem; cursor: pointer; }
+.flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.5s ease; }
+.flashcard.flipped { transform: rotateY(180deg); }
+.fc-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: var(--radius); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem; text-align: center; border: 2px solid var(--border); }
+.fc-front { background: linear-gradient(135deg, #F4F3FF 0%, var(--warm) 100%); border-color: #C0BAE8; }
+.fc-back { background: linear-gradient(135deg, var(--theme-light) 0%, #DDD9FF 100%); border-color: var(--theme); transform: rotateY(180deg); }
+.fc-label { font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.6rem; }
+.fc-content { font-family: var(--serif); font-size: 1.2rem; font-weight: 600; color: var(--text); line-height: 1.4; }
+.fc-back .fc-content { color: var(--theme-dark); }
+.fc-hint { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem; font-style: italic; }
+.fc-nav { display: flex; justify-content: center; gap: 1rem; align-items: center; }
+.fc-btn { background: var(--theme); color: white; border: none; padding: 0.55rem 1.3rem; border-radius: 7px; font-family: var(--sans); font-weight: 600; font-size: 0.9rem; cursor: pointer; }
+.fc-btn.secondary { background: var(--warm); color: var(--text); border: 2px solid var(--border); }
+.fc-position { font-family: var(--mono); font-size: 0.82rem; color: var(--text-muted); }
+
+/* DISCLAIMER */
+.disclaimer-wrap { background: rgba(255,248,225,0.6); border: 1px solid #E8C98A; border-radius: var(--radius); margin-bottom: 1.5rem; overflow: hidden; }
+.disclaimer-toggle { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1.2rem; cursor: pointer; font-size: 0.83rem; color: #8B6914; font-weight: 600; user-select: none; }
+.disclaimer-toggle .darrow { transition: transform 0.3s; }
+.disclaimer-wrap.open .darrow { transform: rotate(180deg); }
+.disclaimer-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.disclaimer-wrap.open .disclaimer-body { max-height: 400px; }
+.disclaimer-inner { padding: 0 1.2rem 1rem; font-size: 0.82rem; color: var(--text-muted); line-height: 1.65; }
+.disclaimer-inner p { margin-bottom: 0.4rem; }
+
+.site-footer { text-align: center; padding: 2rem; font-size: 0.85rem; color: var(--text-muted); border-top: 2px solid var(--border); margin-top: 2rem; font-family: var(--serif); font-style: italic; }
+
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2rem; }
+  .hero { padding: 3rem 1.2rem 2.5rem; }
+  .tab-nav { gap: 0.35rem; padding: 0.7rem 0.8rem; }
+  .tab-btn { font-size: 0.78rem; padding: 0.4rem 0.7rem; }
+  .container { padding: 1.2rem 1rem 3rem; }
+  .card { padding: 1.4rem; }
+  .word-anatomy .breakdown { flex-wrap: wrap; justify-content: center; }
+  .word-part.prefix { border-right: 2px solid #7B6FD0; border-radius: 8px 8px 0 0; }
+  .word-part.root { border-radius: 0; }
+  .word-part.suffix { border-left: 2px solid #D4A843; border-radius: 0 0 8px 8px; }
+}
+@media (max-width: 480px) {
+  html { font-size: 15px; }
+  .hero h1 { font-size: 1.7rem; }
+  .tab-btn { font-size: 0.72rem; padding: 0.35rem 0.55rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="series-banner">Foundations: Closing the Gap &nbsp;&mdash;&nbsp; <span>Scientific Vocabulary as a Language System</span></div>
+
+<div class="hero">
+  <h1>Scientific Vocabulary as a Language System</h1>
+  <div class="subtitle">Biology, chemistry, and physics are not just subjects. They are languages, and they are built from learnable parts. Once you know the parts, you can decode almost any word you have never seen.</div>
+  <div class="byline">You were not taught how to read science words. That gap is smaller than you think, and it closes fast.</div>
+</div>
+
+<nav class="tab-nav" id="tabNav">
+  <button class="tab-btn active" data-tab="start">Start Here</button>
+  <button class="tab-btn" data-tab="howwords">How Words Work</button>
+  <button class="tab-btn" data-tab="roots">Latin &amp; Greek Roots</button>
+  <button class="tab-btn" data-tab="prefixes">Prefixes</button>
+  <button class="tab-btn" data-tab="suffixes">Suffixes</button>
+  <button class="tab-btn" data-tab="decode">Decode Anything</button>
+  <button class="tab-btn" data-tab="quiz">Quiz</button>
+  <button class="tab-btn" data-tab="flashcards">Flashcards</button>
+</nav>
+
+<div class="container">
+
+<!-- ═══════ START HERE ═══════ -->
+<div class="tab-panel active" id="panel-start">
+
+  <div class="disclaimer-wrap" id="disc">
+    <div class="disclaimer-toggle" onclick="toggleDisc()">
+      <span>&#9888;&#65039; Important Disclaimer</span>
+      <span class="darrow">&#9660;</span>
+    </div>
+    <div class="disclaimer-body">
+      <div class="disclaimer-inner">
+        <p>This resource is provided free of charge as a supplemental study aid. It is not a substitute for your course textbook, your instructor's materials, or formal tutoring. While every effort has been made to ensure accuracy, errors may exist. Always verify against your official course materials.</p>
+        <p>Not affiliated with any university, college, testing organization, or publisher. Content is provided "as is" without warranty.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Scientific Vocabulary Is Not Random</h2>
+    <p>One of the most common experiences for students entering college science is sitting in a lecture and hearing a word like <em>deoxyribonucleotide</em> or <em>hypertrophic cardiomyopathy</em> or <em>electronegativity</em> and thinking: I have no idea what that even is, and I will never be able to memorize all of this.</p>
+
+    <p>That feeling is understandable and also almost entirely wrong. Scientific vocabulary is not a pile of arbitrary terms to memorize. It is a constructed language with a system, and once you understand the system, you can decode words you have never seen and reconstruct the meaning of words you have forgotten. The system is built from Latin and Greek roots, prefixes, and suffixes that combine in predictable ways.</p>
+
+    <p>English borrowed heavily from Latin and Greek for scientific terminology because those languages were the international languages of scholarship for centuries. By the time modern biology, chemistry, and physics were being named and codified, Latin and Greek were the default vocabulary for educated people across Europe. The words stuck. And they are still being created the same way: when scientists discovered a new protein that causes cell death, they named it <em>caspase</em>, built from Greek roots. When they found a gene that suppresses tumor growth, they named it <em>p53</em>, but the pathway it controls was named using the same ancient vocabulary as always.</p>
+
+    <div class="callout honest">
+      <strong>Why you were not taught this:</strong> Explicit instruction in Latin and Greek roots was a standard part of American education through the mid-twentieth century. It declined as classical language study declined, and eventually was dropped from most K-12 curricula entirely. Vocabulary instruction that replaced it focused on context clues and memorization of individual words rather than on the underlying system. The result is that students can sometimes use a word correctly in context but cannot decode an unfamiliar word even when it is built from parts they have technically encountered.
+    </div>
+
+    <h3>What This Guide Covers</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>How Scientific Words Are Built</strong>
+          <p>The three-part structure of most scientific terms: prefix, root, suffix. Understanding this structure lets you decompose any word into its meaning.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>The 60 Most Important Latin and Greek Roots</strong>
+          <p>These are the building blocks that appear in hundreds of scientific terms across biology, chemistry, and medicine. Learning 60 roots unlocks thousands of words.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Common Scientific Prefixes</strong>
+          <p>Prefixes that modify meaning: number prefixes (mono-, di-, tri-), position prefixes (hypo-, hyper-, intra-, inter-), negation prefixes (a-, anti-, de-), and more.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Common Scientific Suffixes</strong>
+          <p>Suffixes that tell you what kind of thing a word is: -ase (enzyme), -itis (inflammation), -ology (study of), -oma (tumor), -osis (condition), -lysis (breakdown).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <strong>How to Decode Any Unfamiliar Scientific Word</strong>
+          <p>A step-by-step method for taking apart a word you have never seen and making an educated, often accurate guess at its meaning.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warm">
+      <strong>What to expect:</strong> This guide will not make you a Latin scholar. It will give you a working vocabulary of the most common roots so that when you encounter <em>polyneuropathy</em> on an exam, you can reason: poly = many, neuro = nerve, pathy = disease, so this is a disease affecting many nerves. That reasoning takes three seconds and is almost always correct. That is the goal.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>How to Use This Guide</h2>
+    <p>Work through the tabs in order the first time. The roots, prefixes, and suffixes are organized by frequency and importance, not alphabetically, so the things that appear most often in introductory science come first.</p>
+    <p>Use the flashcards to drill until the most common roots feel immediate. Use the quiz to test whether you can apply the system to words you have not memorized directly. The goal is pattern recognition, not rote memorization of individual terms.</p>
+    <div class="callout theme">
+      <strong>A note on spelling variation:</strong> Roots often appear in slightly different forms depending on how they combine with other word parts. <em>Bio</em> sometimes appears as <em>bi</em>, <em>cardio</em> sometimes as <em>cardi</em>. Do not let these variations confuse you. Focus on recognizing the core meaning rather than a single exact spelling.
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════ HOW WORDS WORK ═══════ -->
+<div class="tab-panel" id="panel-howwords">
+
+  <div class="card">
+    <h2>How Scientific Words Are Built</h2>
+    <p>Almost every scientific term is built from three types of pieces: a root that carries the central meaning, an optional prefix at the front that modifies it, and an optional suffix at the end that tells you what kind of thing it is. Most words use two or three of these pieces. Some long words stack several roots together.</p>
+
+    <div class="word-anatomy">
+      <div class="full-word">inflammation</div>
+      <div class="breakdown">
+        <div class="word-part prefix">in-</div>
+        <div class="word-part root">flamm</div>
+        <div class="word-part suffix">-ation</div>
+      </div>
+      <div class="labels">
+        <div class="part-label prefix">prefix<br>"into/within"</div>
+        <div class="part-label root">root<br>"flame"</div>
+        <div class="part-label suffix">suffix<br>"process of"</div>
+      </div>
+      <div class="word-meaning">"The process of flame within" — a tissue response characterized by heat, redness, swelling.</div>
+    </div>
+
+    <div class="word-anatomy">
+      <div class="full-word">hypertension</div>
+      <div class="breakdown">
+        <div class="word-part prefix">hyper-</div>
+        <div class="word-part root">tens</div>
+        <div class="word-part suffix">-ion</div>
+      </div>
+      <div class="labels">
+        <div class="part-label prefix">prefix<br>"above/excess"</div>
+        <div class="part-label root">root<br>"stretch/pressure"</div>
+        <div class="part-label suffix">suffix<br>"state of"</div>
+      </div>
+      <div class="word-meaning">"State of excess pressure" — abnormally high blood pressure.</div>
+    </div>
+
+    <div class="word-anatomy">
+      <div class="full-word">deoxyribonucleic</div>
+      <div class="breakdown">
+        <div class="word-part prefix">de-&nbsp;oxy-</div>
+        <div class="word-part root">ribo&nbsp;&bull;&nbsp;nucle</div>
+        <div class="word-part suffix">-ic</div>
+      </div>
+      <div class="labels">
+        <div class="part-label prefix">prefixes<br>"remove + oxygen"</div>
+        <div class="part-label root">roots<br>"ribose + nucleus"</div>
+        <div class="part-label suffix">suffix<br>"relating to"</div>
+      </div>
+      <div class="word-meaning">"Relating to the nucleus, built from ribose sugar with an oxygen removed" — the molecule DNA.</div>
+    </div>
+
+    <h3>The Decoding Mindset</h3>
+    <p>When you encounter an unfamiliar scientific word, the instinct is to feel overwhelmed and try to memorize it as a whole unit. This is the wrong approach and it is why scientific vocabulary feels so impossible. The right approach is to treat the word like a puzzle and look for the pieces you recognize.</p>
+
+    <p>You will not always get the full meaning from the parts. But you will almost always get enough to make sense of the word in context, to remember it, and to reconstruct it if you forget it. A word you understand from its parts is dramatically more durable in memory than a word you memorized as an arbitrary string of syllables.</p>
+
+    <div class="callout theme">
+      <strong>Pronunciation follows the parts.</strong> Scientific words look intimidating partly because they are long. But long words are just several short pieces in sequence. When you know the pieces, you know where the syllable breaks are, and the word becomes pronounceable. <em>Cardiovascular</em> is just cardio + vascul + ar. <em>Photosynthesis</em> is just photo + syn + thesis. Break it apart and it stops being intimidating.
+    </div>
+
+    <h3>Connecting Forms: How Roots Join Together</h3>
+    <p>When two roots are joined in a word, a connecting vowel is often inserted between them to make pronunciation easier. In scientific vocabulary built from Greek, this connecting vowel is almost always <span class="key" style="font-family:var(--mono);color:var(--theme);">-o-</span>. This is why you see forms like <em>cardi<strong>o</strong>pulmonary</em> (heart + lung), <em>electr<strong>o</strong>chemistry</em> (electricity + chemistry), and <em>therm<strong>o</strong>dynamics</em> (heat + power). The -o- is not a separate meaning; it is just linguistic glue.</p>
+
+    <div class="callout warm">
+      <strong>Latin vs. Greek origins:</strong> Many scientific fields have a mix of both. Biology, neurology, cardiology, and most medical terminology are predominantly Greek in origin. Chemistry, physics, and taxonomy blend both. You do not need to know which language a root came from in order to use it. Just recognize the root and its meaning.
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════ ROOTS ═══════ -->
+<div class="tab-panel" id="panel-roots">
+
+  <div class="card">
+    <h2>Latin and Greek Roots</h2>
+    <p>These 60 roots are the highest-frequency building blocks in introductory science vocabulary. A student who knows all 60 can decode a substantial majority of unfamiliar terms they encounter in biology, chemistry, anatomy, and medicine. They are organized by conceptual category so related roots are learned together.</p>
+
+    <h3>Body and Life</h3>
+    <table class="root-table">
+      <thead><tr><th>Root</th><th>Meaning</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td class="key">bio</td><td>life</td><td class="examples">biology, biome, antibiotic, symbiosis</td></tr>
+        <tr><td class="key">vita / viv</td><td>life</td><td class="examples">vitamin, viable, revive, vivid</td></tr>
+        <tr><td class="key">mort / mori</td><td>death</td><td class="examples">mortality, apoptosis (cell death), postmortem</td></tr>
+        <tr><td class="key">gen</td><td>origin, produce, kind</td><td class="examples">gene, genetics, carcinogen, genesis, oxygen</td></tr>
+        <tr><td class="key">soma / somat</td><td>body</td><td class="examples">somatic cell, chromosome, psychosomatic</td></tr>
+        <tr><td class="key">hist / histo</td><td>tissue</td><td class="examples">histology, histamine, histologist</td></tr>
+        <tr><td class="key">cyt / cyto</td><td>cell</td><td class="examples">cytoplasm, cytology, leukocyte, erythrocyte</td></tr>
+        <tr><td class="key">nuc / nucle</td><td>kernel, nucleus</td><td class="examples">nucleus, nucleotide, nuclear, enucleate</td></tr>
+        <tr><td class="key">chrom</td><td>color</td><td class="examples">chromosome, chromatin, chromophore</td></tr>
+        <tr><td class="key">trop / troph</td><td>turn, nourish</td><td class="examples">trophy, atrophy, hypertrophy, phototropism</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Organs and Body Systems</h3>
+    <table class="root-table">
+      <thead><tr><th>Root</th><th>Meaning</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td class="key">cardio / cardi</td><td>heart</td><td class="examples">cardiology, cardiac, pericardium, tachycardia</td></tr>
+        <tr><td class="key">pulmo / pneumo</td><td>lung</td><td class="examples">pulmonary, pneumonia, pneumothorax</td></tr>
+        <tr><td class="key">hepat</td><td>liver</td><td class="examples">hepatitis, hepatocyte, hepatology</td></tr>
+        <tr><td class="key">nephr / ren</td><td>kidney</td><td class="examples">nephron, nephritis, renal, adrenal</td></tr>
+        <tr><td class="key">gastr</td><td>stomach</td><td class="examples">gastric, gastritis, gastroenterology</td></tr>
+        <tr><td class="key">enter</td><td>intestine</td><td class="examples">enteritis, gastroenteritis, enterocyte</td></tr>
+        <tr><td class="key">derm / dermat</td><td>skin</td><td class="examples">dermatology, epidermis, hypodermic</td></tr>
+        <tr><td class="key">neur / neuro</td><td>nerve</td><td class="examples">neuron, neurology, neuropathy, neurotransmitter</td></tr>
+        <tr><td class="key">osteo</td><td>bone</td><td class="examples">osteoporosis, osteoblast, periosteum</td></tr>
+        <tr><td class="key">myo / mys</td><td>muscle</td><td class="examples">myocardium, myosin, myopathy</td></tr>
+        <tr><td class="key">hem / hemat</td><td>blood</td><td class="examples">hemoglobin, hematology, hemorrhage, anemia</td></tr>
+        <tr><td class="key">lymph</td><td>water, lymph</td><td class="examples">lymphocyte, lymphoma, lymphatic</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Movement, Change, and Process</h3>
+    <table class="root-table">
+      <thead><tr><th>Root</th><th>Meaning</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td class="key">lysis / lyto</td><td>break down, dissolve</td><td class="examples">hydrolysis, glycolysis, catalysis, electrolyte</td></tr>
+        <tr><td class="key">phag</td><td>eat, engulf</td><td class="examples">phagocyte, macrophage, bacteriophage</td></tr>
+        <tr><td class="key">synth</td><td>put together</td><td class="examples">synthesis, photosynthesis, anabolic</td></tr>
+        <tr><td class="key">trans</td><td>across, through</td><td class="examples">transport, transcription, translation, transmembrane</td></tr>
+        <tr><td class="key">osmosis</td><td>push, impulse</td><td class="examples">osmosis, osmolarity, osmotic pressure</td></tr>
+        <tr><td class="key">diffus</td><td>spread out</td><td class="examples">diffusion, diffuse, osmotic diffusion</td></tr>
+        <tr><td class="key">meta</td><td>change, beyond</td><td class="examples">metabolism, metamorphosis, metastasis</td></tr>
+        <tr><td class="key">kinet / kinesis</td><td>movement</td><td class="examples">kinetic energy, cytokinesis, chemokine</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Chemistry and Matter</h3>
+    <table class="root-table">
+      <thead><tr><th>Root</th><th>Meaning</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td class="key">hydro / hydr</td><td>water</td><td class="examples">hydrolysis, dehydration, hydrogen, hydrophobic</td></tr>
+        <tr><td class="key">ox / oxy</td><td>oxygen, sharp</td><td class="examples">oxidation, oxygen, peroxide, deoxyribose</td></tr>
+        <tr><td class="key">therm</td><td>heat</td><td class="examples">thermodynamics, exothermic, endothermic, thermostat</td></tr>
+        <tr><td class="key">photo</td><td>light</td><td class="examples">photosynthesis, photon, photolysis, photography</td></tr>
+        <tr><td class="key">electr</td><td>electricity, amber</td><td class="examples">electron, electrolyte, electronegativity, electrode</td></tr>
+        <tr><td class="key">ion</td><td>going (charged particle)</td><td class="examples">ion, ionization, cation, anion</td></tr>
+        <tr><td class="key">acid / acet</td><td>sour, sharp</td><td class="examples">acid, acetic acid, acetyl group, acetylcholine</td></tr>
+        <tr><td class="key">lip / lipo</td><td>fat</td><td class="examples">lipid, lipoprotein, phospholipid, lipolysis</td></tr>
+        <tr><td class="key">gluco / glyco</td><td>sweet, sugar</td><td class="examples">glucose, glycogen, glycolysis, glycoprotein</td></tr>
+        <tr><td class="key">amino</td><td>nitrogen-containing group</td><td class="examples">amino acid, amine, ammonia, aminopeptidase</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Size, Number, and Structure</h3>
+    <table class="root-table">
+      <thead><tr><th>Root</th><th>Meaning</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td class="key">macro</td><td>large</td><td class="examples">macrophage, macromolecule, macroevolution</td></tr>
+        <tr><td class="key">micro</td><td>small</td><td class="examples">microscope, microbe, microorganism, microtubule</td></tr>
+        <tr><td class="key">poly</td><td>many</td><td class="examples">polymer, polysaccharide, polynucleotide, polymerase</td></tr>
+        <tr><td class="key">mono</td><td>one, single</td><td class="examples">monosaccharide, monomer, monocyte, monopoly</td></tr>
+        <tr><td class="key">di / bis</td><td>two, double</td><td class="examples">disaccharide, disulfide, dioxide, dimer</td></tr>
+        <tr><td class="key">morph</td><td>shape, form</td><td class="examples">morphology, amorphous, polymorphism, allomorph</td></tr>
+        <tr><td class="key">membran</td><td>thin skin/layer</td><td class="examples">membrane, transmembrane, intramembranous</td></tr>
+        <tr><td class="key">struct</td><td>build, arrange</td><td class="examples">structure, ultrastructure, microstructure, substrate</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Observation and Study</h3>
+    <table class="root-table">
+      <thead><tr><th>Root</th><th>Meaning</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td class="key">logo / logy</td><td>study, word, reason</td><td class="examples">biology, neurology, pathology, ecology</td></tr>
+        <tr><td class="key">scope / scop</td><td>look, observe</td><td class="examples">microscope, telescope, stethoscope, endoscope</td></tr>
+        <tr><td class="key">meter / metr</td><td>measure</td><td class="examples">thermometer, spirometer, micrometer, spectrometer</td></tr>
+        <tr><td class="key">graph</td><td>write, record</td><td class="examples">electrocardiograph, chromatography, spectrograph</td></tr>
+        <tr><td class="key">path</td><td>disease, suffering</td><td class="examples">pathology, neuropathy, pathogen, psychopath</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout theme">
+      <strong>Memorization tip:</strong> Do not try to learn all 60 at once. Start with the category most relevant to the course you are currently in. If you are taking biology, master the "Body and Life" and "Organs" rows first. If you are taking chemistry, start with "Chemistry and Matter." After one week of daily review with the flashcards, the most common ones will start to feel automatic.
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════ PREFIXES ═══════ -->
+<div class="tab-panel" id="panel-prefixes">
+
+  <div class="card">
+    <h2>Scientific Prefixes</h2>
+    <p>Prefixes modify the root. They tell you something about quantity, position, relationship, or negation. The same prefix appears across biology, chemistry, physics, and medicine, so learning it once pays dividends in every science course you take.</p>
+
+    <h3>Number and Quantity Prefixes</h3>
+    <p>These appear constantly in chemistry (naming compounds) and biology (describing structures with multiple copies).</p>
+    <table class="root-table">
+      <thead><tr><th>Prefix</th><th>Meaning</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td class="key">mono-</td><td>one</td><td class="examples">monosaccharide, monomer, monoxide, monoamine</td></tr>
+        <tr><td class="key">di-</td><td>two</td><td class="examples">disaccharide, disulfide, dioxide, dipeptide</td></tr>
+        <tr><td class="key">tri-</td><td>three</td><td class="examples">triglyceride, triphosphate, tricarboxylic, trisomy</td></tr>
+        <tr><td class="key">tetra-</td><td>four</td><td class="examples">tetrahedral, tetramer, tetracycline</td></tr>
+        <tr><td class="key">penta-</td><td>five</td><td class="examples">pentose, pentagonal, pentamer</td></tr>
+        <tr><td class="key">hexa-</td><td>six</td><td class="examples">hexose, hexagonal, hexapeptide</td></tr>
+        <tr><td class="key">poly-</td><td>many</td><td class="examples">polymer, polysaccharide, polypeptide, polymerase</td></tr>
+        <tr><td class="key">oligo-</td><td>few</td><td class="examples">oligosaccharide, oligomer, oligonucleotide</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Position and Relationship Prefixes</h3>
+    <p>These describe where something is or how it relates to something else. They are especially common in anatomy, cell biology, and pharmacology.</p>
+    <table class="root-table">
+      <thead><tr><th>Prefix</th><th>Meaning</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td class="key">intra-</td><td>within, inside</td><td class="examples">intracellular, intravenous, intramuscular</td></tr>
+        <tr><td class="key">inter-</td><td>between</td><td class="examples">intercellular, interstitial, interneuron</td></tr>
+        <tr><td class="key">extra-</td><td>outside, beyond</td><td class="examples">extracellular, extravascular, extracurricular</td></tr>
+        <tr><td class="key">trans-</td><td>across, through</td><td class="examples">transmembrane, transcription, transport</td></tr>
+        <tr><td class="key">peri-</td><td>around</td><td class="examples">pericardium, periosteum, peripheral, perimeter</td></tr>
+        <tr><td class="key">epi-</td><td>upon, over</td><td class="examples">epidermis, epithelium, epigenetics, epidemic</td></tr>
+        <tr><td class="key">endo-</td><td>within</td><td class="examples">endoplasmic, endocytosis, endothelium, endocrine</td></tr>
+        <tr><td class="key">exo- / ecto-</td><td>outside</td><td class="examples">exocytosis, exoskeleton, ectoderm, exothermic</td></tr>
+        <tr><td class="key">sub-</td><td>under, below</td><td class="examples">subcutaneous, substrate, subunit, sublingual</td></tr>
+        <tr><td class="key">supra- / super-</td><td>above, over</td><td class="examples">suprarenal, supraventricular, superficial</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Negation and Opposition Prefixes</h3>
+    <table class="root-table">
+      <thead><tr><th>Prefix</th><th>Meaning</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td class="key">a- / an-</td><td>without, not</td><td class="examples">anaerobic, anemia, atrophy, asexual, apoptosis</td></tr>
+        <tr><td class="key">anti-</td><td>against</td><td class="examples">antibiotic, antibody, antigen, antioxidant</td></tr>
+        <tr><td class="key">de-</td><td>remove, reverse</td><td class="examples">denaturation, dehydration, deoxyribose, depolarize</td></tr>
+        <tr><td class="key">un- / non-</td><td>not</td><td class="examples">unsaturated, nonpolar, nonspecific</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Degree and Intensity Prefixes</h3>
+    <p>These are especially important in physiology and clinical medicine, where they describe whether a value is above or below normal.</p>
+    <table class="root-table">
+      <thead><tr><th>Prefix</th><th>Meaning</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td class="key">hypo-</td><td>under, below normal</td><td class="examples">hypotension, hypoglycemia, hypothermia, hypoxia</td></tr>
+        <tr><td class="key">hyper-</td><td>over, above normal</td><td class="examples">hypertension, hyperglycemia, hyperthermia, hyperactive</td></tr>
+        <tr><td class="key">brady-</td><td>slow</td><td class="examples">bradycardia (slow heart rate), bradypnea</td></tr>
+        <tr><td class="key">tachy-</td><td>fast</td><td class="examples">tachycardia (fast heart rate), tachypnea</td></tr>
+        <tr><td class="key">eu-</td><td>good, normal</td><td class="examples">eukaryote, euphoria, eustress, euglycemia</td></tr>
+        <tr><td class="key">dys-</td><td>bad, difficult, abnormal</td><td class="examples">dysfunction, dyspnea, dystrophy, dyslipidemia</td></tr>
+      </tbody>
+    </table>
+
+    <div class="word-build">
+      <div class="wb-word">Hyperglycemia</div>
+      <div class="wb-parts">hyper- + glyco + -emia</div>
+      <div class="wb-meaning">above normal + sugar + blood condition = abnormally high blood sugar. This is the defining feature of diabetes.</div>
+    </div>
+    <div class="word-build">
+      <div class="wb-word">Bradycardia</div>
+      <div class="wb-parts">brady- + cardio + -ia</div>
+      <div class="wb-meaning">slow + heart + condition = abnormally slow heart rate (below 60 bpm at rest).</div>
+    </div>
+    <div class="word-build">
+      <div class="wb-word">Intracellular</div>
+      <div class="wb-parts">intra- + cellul + -ar</div>
+      <div class="wb-meaning">within + cell + relating to = existing or occurring inside a cell.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════ SUFFIXES ═══════ -->
+<div class="tab-panel" id="panel-suffixes">
+
+  <div class="card">
+    <h2>Scientific Suffixes</h2>
+    <p>Suffixes tell you what category of thing a word belongs to. They are the most immediately useful part of the system because once you recognize a suffix pattern, a new word is no longer completely opaque. You know what kind of thing it is even before you understand the root.</p>
+
+    <h3>Suffixes That Name Disciplines and Studies</h3>
+    <table class="root-table">
+      <thead><tr><th>Suffix</th><th>Meaning</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td class="key">-ology</td><td>study of</td><td class="examples">biology, neurology, histology, pathology, ecology</td></tr>
+        <tr><td class="key">-ics</td><td>science or practice of</td><td class="examples">genetics, physics, kinetics, thermodynamics</td></tr>
+        <tr><td class="key">-omy</td><td>cutting into, study of structure</td><td class="examples">anatomy, taxonomy, dichotomy, gastronomy</td></tr>
+        <tr><td class="key">-metry</td><td>measurement of</td><td class="examples">spirometry, spectrophotometry, colorimetry</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Suffixes That Name Conditions and Diseases</h3>
+    <p>These are the suffixes most students encounter in anatomy and physiology, microbiology, and any health-related course.</p>
+    <table class="root-table">
+      <thead><tr><th>Suffix</th><th>Meaning</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td class="key">-itis</td><td>inflammation of</td><td class="examples">hepatitis, nephritis, appendicitis, gastritis, dermatitis</td></tr>
+        <tr><td class="key">-osis</td><td>condition, process, or abnormal state</td><td class="examples">fibrosis, thrombosis, necrosis, acidosis, osteoporosis</td></tr>
+        <tr><td class="key">-oma</td><td>tumor, mass</td><td class="examples">carcinoma, melanoma, lymphoma, glioma, fibroma</td></tr>
+        <tr><td class="key">-pathy</td><td>disease of</td><td class="examples">neuropathy, cardiomyopathy, nephropathy, myopathy</td></tr>
+        <tr><td class="key">-emia</td><td>blood condition</td><td class="examples">anemia, leukemia, hyperglycemia, hypoxemia, septicemia</td></tr>
+        <tr><td class="key">-ia / -iasis</td><td>condition, state</td><td class="examples">hypoxia, hypoglycemia, psoriasis, lithiasis</td></tr>
+        <tr><td class="key">-algia</td><td>pain</td><td class="examples">neuralgia, myalgia, fibromyalgia, arthralgia</td></tr>
+        <tr><td class="key">-plegia</td><td>paralysis</td><td class="examples">paraplegia, quadriplegia, hemiplegia</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Suffixes That Name Biological Agents and Things</h3>
+    <table class="root-table">
+      <thead><tr><th>Suffix</th><th>Meaning</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td class="key">-ase</td><td>enzyme</td><td class="examples">lipase, protease, nuclease, polymerase, kinase</td></tr>
+        <tr><td class="key">-cyte</td><td>cell</td><td class="examples">leukocyte, erythrocyte, hepatocyte, osteocyte</td></tr>
+        <tr><td class="key">-gen / -genic</td><td>producing, causing</td><td class="examples">carcinogen, mutagen, pathogen, allergen</td></tr>
+        <tr><td class="key">-lysis</td><td>breakdown, splitting</td><td class="examples">hydrolysis, glycolysis, hemolysis, electrolysis</td></tr>
+        <tr><td class="key">-mer</td><td>unit, part</td><td class="examples">monomer, polymer, isomer, oligomer</td></tr>
+        <tr><td class="key">-phage</td><td>one that eats</td><td class="examples">bacteriophage, macrophage, phagocyte</td></tr>
+        <tr><td class="key">-plasm</td><td>formed material, substance</td><td class="examples">cytoplasm, nucleoplasm, neoplasm, protoplasm</td></tr>
+        <tr><td class="key">-some</td><td>body, structure</td><td class="examples">chromosome, ribosome, lysosome, peroxisome</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Suffixes That Describe Properties and Relationships</h3>
+    <table class="root-table">
+      <thead><tr><th>Suffix</th><th>Meaning</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td class="key">-ic / -tic</td><td>relating to, having the nature of</td><td class="examples">aerobic, metabolic, genetic, acidic, osmotic</td></tr>
+        <tr><td class="key">-al</td><td>relating to</td><td class="examples">renal, neural, hormonal, thermal, structural</td></tr>
+        <tr><td class="key">-ous</td><td>having the quality of</td><td class="examples">aqueous, gaseous, porous, fibrous, vitreous</td></tr>
+        <tr><td class="key">-philic</td><td>attracted to, loving</td><td class="examples">hydrophilic, lipophilic, acidophilic, neutrophil</td></tr>
+        <tr><td class="key">-phobic</td><td>repelled by, fearing</td><td class="examples">hydrophobic, lipophobic, aerophobic</td></tr>
+        <tr><td class="key">-tropic / -trophic</td><td>turning toward, nourishing</td><td class="examples">phototropic, hypertrophic, neurotrophic</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout theme">
+      <strong>The -ase rule is one of the most useful in all of biology:</strong> If a word ends in -ase, it is an enzyme. Always. Lipase breaks down lipids. Protease breaks down proteins. Nuclease breaks down nucleic acids. Polymerase polymerizes (builds) nucleic acids. You can often determine what an enzyme does from its name alone.
+    </div>
+
+    <div class="word-build">
+      <div class="wb-word">Erythrocyte</div>
+      <div class="wb-parts">erythro- + -cyte</div>
+      <div class="wb-meaning">red + cell = red blood cell (RBC).</div>
+    </div>
+    <div class="word-build">
+      <div class="wb-word">Hepatitis</div>
+      <div class="wb-parts">hepat- + -itis</div>
+      <div class="wb-meaning">liver + inflammation = inflammation of the liver.</div>
+    </div>
+    <div class="word-build">
+      <div class="wb-word">Hydrophobic</div>
+      <div class="wb-parts">hydro- + -phobic</div>
+      <div class="wb-meaning">water + repelled by = water-repelling. Describes nonpolar molecules like fats that do not dissolve in water.</div>
+    </div>
+    <div class="word-build">
+      <div class="wb-word">Glycolysis</div>
+      <div class="wb-parts">glyco- + -lysis</div>
+      <div class="wb-meaning">sugar + breakdown = the metabolic pathway that breaks down glucose to produce ATP.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════ DECODE ANYTHING ═══════ -->
+<div class="tab-panel" id="panel-decode">
+
+  <div class="card">
+    <h2>How to Decode Any Unfamiliar Scientific Word</h2>
+    <p>You now have enough vocabulary of roots, prefixes, and suffixes to apply a systematic decoding method to most scientific words you will encounter. Here is the method, step by step.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Look for a recognizable suffix first</strong>
+          <p>The suffix tells you what kind of thing the word is. Does it end in -itis (inflammation), -ase (enzyme), -oma (tumor), -ology (study of), -cyte (cell)? Identifying the suffix gives you the category before you know anything else.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Look for a recognizable prefix</strong>
+          <p>Does the word start with hypo-, hyper-, intra-, anti-, de-, poly-? The prefix modifies the root and tells you something about quantity, position, or direction.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Identify the root or roots</strong>
+          <p>What is left after prefix and suffix is the root, which carries the central meaning. Do you recognize it? If not, look for a shorter familiar word embedded in it: <em>arthr</em> sounds like <em>arthritis</em> (which you know means joint inflammation), so <em>arthr</em> = joint.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Assemble a rough meaning</strong>
+          <p>Put the parts together in a logical way. You do not need to produce the exact dictionary definition. You need a working understanding that makes sense in context. The word may have nuances your analysis misses, but the core meaning will almost always be right.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <strong>Check against context</strong>
+          <p>Does your decoded meaning make sense in the sentence or passage where you found the word? If yes, proceed. If no, you may have the wrong root interpretation; look at it again or check your textbook glossary.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Worked Decoding Examples</h3>
+
+    <div class="word-build">
+      <div class="wb-word">Polyneuropathy</div>
+      <div class="wb-parts">poly- + neuro + -pathy</div>
+      <div class="wb-meaning">many + nerve + disease = a disease affecting multiple nerves simultaneously. Common in diabetes and alcoholism.</div>
+    </div>
+
+    <div class="word-build">
+      <div class="wb-word">Electrocardiogram</div>
+      <div class="wb-parts">electro- + cardio + -gram</div>
+      <div class="wb-meaning">electrical + heart + record/writing = a recording of the electrical activity of the heart. The familiar ECG or EKG.</div>
+    </div>
+
+    <div class="word-build">
+      <div class="wb-word">Deoxyribonucleic</div>
+      <div class="wb-parts">de- + oxy + ribo + nucle + -ic</div>
+      <div class="wb-meaning">remove + oxygen + ribose (sugar) + nucleus + relating to = relating to the nucleus, built from a ribose sugar that has had an oxygen removed. This is DNA.</div>
+    </div>
+
+    <div class="word-build">
+      <div class="wb-word">Hypertrophic cardiomyopathy</div>
+      <div class="wb-parts">hyper- + troph + -ic &nbsp;|&nbsp; cardio + myo + -pathy</div>
+      <div class="wb-meaning">above normal + nourishment/growth + relating to = excessively enlarged; &nbsp; heart + muscle + disease = disease of heart muscle. Together: a disease in which the heart muscle is excessively enlarged. A leading cause of sudden cardiac death in young athletes.</div>
+    </div>
+
+    <div class="word-build">
+      <div class="wb-word">Erythropoietin</div>
+      <div class="wb-parts">erythro- + poiet + -in</div>
+      <div class="wb-meaning">red + making/producing + substance = a substance that produces red (blood cells). This hormone, made by the kidneys, stimulates red blood cell production. EPO is the banned performance-enhancing substance some athletes use.</div>
+    </div>
+
+    <h3>When You Cannot Decode a Word</h3>
+    <p>Sometimes you will encounter a word built from a root you do not know, or a historical word whose etymology has drifted far from its original meaning. This happens. The system does not cover everything.</p>
+
+    <p>When decoding fails, do not panic. Look the word up in your textbook glossary, which should be your first stop before searching online. Read the definition, then look for any roots or parts you now recognize in the word. Even after looking it up, taking the word apart solidifies the memory. A word you have analyzed is far more durable than a word you have only read.</p>
+
+    <div class="reflection">
+      <h3>Practice: Decode These Words</h3>
+      <div class="q"><span class="q-num">01</span><span>Leukocytosis — use leuko (white), cyto (cell), -osis (condition) to construct a meaning.</span></div>
+      <div class="q"><span class="q-num">02</span><span>Thermolysis — use thermo (heat), -lysis (breakdown). What does this describe?</span></div>
+      <div class="q"><span class="q-num">03</span><span>Endocytosis — use endo (within), cyto (cell), -osis (process). What is happening?</span></div>
+      <div class="q"><span class="q-num">04</span><span>Tachypnea — use tachy (fast), pnea (breathing). What is the clinical meaning?</span></div>
+      <div class="q"><span class="q-num">05</span><span>Oligosaccharide — use oligo (few), sacchar (sugar), -ide (chemical compound). What kind of molecule is this?</span></div>
+    </div>
+
+    <div class="callout warm">
+      <strong>Answers:</strong> (1) A condition of increased white blood cells — often a sign of infection. (2) Breakdown by heat — decomposition of a substance through heat exposure. (3) The process of a cell taking something in from outside by surrounding it — how cells engulf large particles. (4) Abnormally fast breathing rate — a clinical sign in respiratory distress, fever, or anxiety. (5) A carbohydrate made of a few sugar units — longer than a disaccharide but shorter than a polysaccharide.
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════ QUIZ ═══════ -->
+<div class="tab-panel" id="panel-quiz">
+  <div class="quiz-container">
+    <div id="quiz-active">
+      <div class="quiz-header">
+        <h3>Scientific Vocabulary Quiz</h3>
+        <div class="quiz-score" id="q-score">Score: 0 / 0</div>
+      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar" id="q-bar" style="width:0%"></div></div>
+      <div class="quiz-question" id="q-question"></div>
+      <div class="quiz-options" id="q-options"></div>
+      <div class="quiz-explanation" id="q-explanation"></div>
+      <div class="quiz-nav">
+        <div class="quiz-progress" id="q-progress">Question 1 of 40</div>
+        <button class="quiz-btn" id="q-next" onclick="nextQuestion()" disabled>Next</button>
+      </div>
+    </div>
+    <div class="quiz-final" id="quiz-final">
+      <div class="quiz-final-score" id="final-score"></div>
+      <div class="quiz-final-msg" id="final-msg"></div>
+      <button class="quiz-restart" onclick="startQuiz()">Try Again</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ FLASHCARDS ═══════ -->
+<div class="tab-panel" id="panel-flashcards">
+  <div class="card" style="padding-bottom:1rem;">
+    <h2>Flashcards</h2>
+    <p>Click a card to flip it. Filter by category to focus on a specific group of roots. The goal is to reach the point where a root's meaning surfaces in under two seconds.</p>
+    <div class="flashcard-controls" id="fc-filters"></div>
+    <div class="flashcard-scene" onclick="flipCard()">
+      <div class="flashcard" id="fc-card">
+        <div class="fc-face fc-front">
+          <div class="fc-label">Root / Prefix / Suffix</div>
+          <div class="fc-content" id="fc-front-text"></div>
+          <div class="fc-hint">Click to reveal meaning</div>
+        </div>
+        <div class="fc-face fc-back">
+          <div class="fc-label">Meaning &amp; Examples</div>
+          <div class="fc-content" id="fc-back-text"></div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-nav">
+      <button class="fc-btn secondary" onclick="fcNav(-1)">&#8592; Prev</button>
+      <div class="fc-position" id="fc-pos"></div>
+      <button class="fc-btn" onclick="fcNav(1)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<div class="site-footer">
+  Foundations: Closing the Gap &mdash; Free supplemental resource. Not affiliated with any university or publisher.<br>
+  Always verify content against your official course materials.
+</div>
+
+<script>
+// TAB NAVIGATION
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    this.classList.add('active');
+    document.getElementById('panel-' + this.dataset.tab).classList.add('active');
+    window.scrollTo({ top: document.querySelector('.tab-nav').offsetTop - 2, behavior: 'smooth' });
+    if (this.dataset.tab === 'quiz' && !quizStarted) startQuiz();
+    if (this.dataset.tab === 'flashcards') renderCard();
+  });
+});
+
+function toggleDisc() { document.getElementById('disc').classList.toggle('open'); }
+
+// ═══ QUIZ DATA ═══
+const questions = [
+  // ROOTS
+  { cat: 'Roots', q: 'What does the root "cardio" mean?', opts: ['Blood', 'Heart', 'Lung', 'Vessel'], ans: 1, exp: 'Cardio comes from the Greek kardia, meaning heart. It appears in cardiology, cardiac arrest, tachycardia, and pericardium.' },
+  { cat: 'Roots', q: 'What does the root "hepat" mean?', opts: ['Kidney', 'Stomach', 'Liver', 'Spleen'], ans: 2, exp: 'Hepat comes from Greek hepar, meaning liver. Hepatitis is inflammation of the liver. Hepatocytes are liver cells.' },
+  { cat: 'Roots', q: 'The root "cyt" or "cyto" means:', opts: ['Tissue', 'Organ', 'Cell', 'Membrane'], ans: 2, exp: 'Cyto comes from Greek kytos, meaning hollow vessel or cell. Cytoplasm, cytology, leukocyte, and erythrocyte all use this root.' },
+  { cat: 'Roots', q: 'What does "lysis" mean?', opts: ['Growth', 'Breakdown/dissolving', 'Synthesis', 'Movement'], ans: 1, exp: 'Lysis comes from Greek lyein, to loosen or dissolve. Hydrolysis (water breakdown), glycolysis (sugar breakdown), hemolysis (blood cell breakdown).' },
+  { cat: 'Roots', q: 'The root "neuro" refers to:', opts: ['Muscle', 'Nerve', 'Brain', 'Bone'], ans: 1, exp: 'Neuro comes from Greek neuron, meaning nerve or sinew. Neurology, neurotransmitter, neuropathy all use this root.' },
+  { cat: 'Roots', q: 'What does "glyco" or "gluco" mean?', opts: ['Fat', 'Protein', 'Sugar/sweet', 'Acid'], ans: 2, exp: 'Glyco/gluco comes from Greek glykys, meaning sweet. Glucose, glycogen, glycolysis, and glycoprotein all derive from this root.' },
+  { cat: 'Roots', q: 'The root "therm" means:', opts: ['Cold', 'Heat', 'Energy', 'Pressure'], ans: 1, exp: 'Therm comes from Greek therme, meaning heat. Thermodynamics, thermometer, exothermic, endothermic.' },
+  { cat: 'Roots', q: 'What does "hydro" mean?', opts: ['Air', 'Water', 'Salt', 'Acid'], ans: 1, exp: 'Hydro comes from Greek hydor, meaning water. Hydrolysis, dehydration, hydrogen (water-forming), hydrophobic.' },
+  { cat: 'Roots', q: 'The root "osteo" refers to:', opts: ['Muscle', 'Blood', 'Bone', 'Skin'], ans: 2, exp: 'Osteo comes from Greek osteon, meaning bone. Osteoporosis (porous bone), osteoblast (bone-forming cell), osteocyte (bone cell).' },
+  { cat: 'Roots', q: 'What does "photo" mean?', opts: ['Color', 'Light', 'Energy', 'Heat'], ans: 1, exp: 'Photo comes from Greek phos/photos, meaning light. Photosynthesis, photon, photolysis, photoreceptor.' },
+  // PREFIXES
+  { cat: 'Prefixes', q: 'The prefix "hyper-" means:', opts: ['Below normal', 'Within', 'Above/excessive', 'Between'], ans: 2, exp: 'Hyper comes from Greek hyper, meaning over or above. Hypertension (high blood pressure), hyperglycemia (high blood sugar), hypertrophic (excessively enlarged).' },
+  { cat: 'Prefixes', q: 'The prefix "hypo-" means:', opts: ['Above normal', 'Below normal', 'Around', 'Through'], ans: 1, exp: 'Hypo comes from Greek hypo, meaning under or below. Hypotension (low blood pressure), hypoglycemia (low blood sugar), hypothermia (low body temperature).' },
+  { cat: 'Prefixes', q: 'What does "intra-" mean?', opts: ['Between', 'Within/inside', 'Outside', 'Above'], ans: 1, exp: 'Intra comes from Latin intra, meaning within. Intracellular (inside the cell), intravenous (inside the vein), intramuscular (inside the muscle).' },
+  { cat: 'Prefixes', q: 'What does "inter-" mean?', opts: ['Within', 'Between', 'Above', 'Outside'], ans: 1, exp: 'Inter comes from Latin inter, meaning between. Intercellular (between cells), interstitial (between structures), interneuron (neuron between others).' },
+  { cat: 'Prefixes', q: 'The prefix "poly-" means:', opts: ['One', 'Two', 'Many', 'Few'], ans: 2, exp: 'Poly comes from Greek polys, meaning many. Polymer (many mers), polysaccharide (many sugars), polymerase (enzyme that builds polymers).' },
+  { cat: 'Prefixes', q: 'What does "a-" or "an-" mean at the start of a scientific word?', opts: ['Again', 'Within', 'Without/not', 'Above'], ans: 2, exp: 'The prefix a-/an- comes from Greek and means without or not. Anaerobic (without oxygen), anemia (without enough blood), apoptosis (programmed cell death).' },
+  { cat: 'Prefixes', q: 'The prefix "de-" means:', opts: ['Down, remove, reverse', 'Double', 'Through', 'Half'], ans: 0, exp: 'De comes from Latin de, meaning down, from, or reversal. Dehydration (removal of water), denaturation (reversal of natural state), deoxyribose (oxygen removed).' },
+  { cat: 'Prefixes', q: 'The prefix "tachy-" means:', opts: ['Slow', 'Fast', 'Abnormal', 'Painful'], ans: 1, exp: 'Tachy comes from Greek tachys, meaning fast or swift. Tachycardia (fast heart rate), tachypnea (fast breathing).' },
+  { cat: 'Prefixes', q: 'What does "peri-" mean?', opts: ['Before', 'After', 'Around', 'Through'], ans: 2, exp: 'Peri comes from Greek peri, meaning around or surrounding. Pericardium (sac around the heart), periosteum (layer around bone), peripheral (on the outer edge).' },
+  { cat: 'Prefixes', q: 'The prefix "anti-" means:', opts: ['With', 'Against', 'Before', 'Together'], ans: 1, exp: 'Anti comes from Greek anti, meaning against or opposite. Antibiotic (against life of bacteria), antibody (against a foreign body), antioxidant (against oxidation).' },
+  // SUFFIXES
+  { cat: 'Suffixes', q: 'A word ending in "-itis" always means:', opts: ['Tumor', 'Enzyme', 'Inflammation', 'Cell type'], ans: 2, exp: '-Itis comes from Greek and always indicates inflammation. Hepatitis (liver inflammation), nephritis (kidney inflammation), appendicitis (appendix inflammation).' },
+  { cat: 'Suffixes', q: 'A word ending in "-ase" always means:', opts: ['Disease', 'Enzyme', 'Cell', 'Hormone'], ans: 1, exp: '-Ase is the universal suffix for enzymes. Lipase (breaks down lipids), protease (breaks down proteins), polymerase (builds polymers). If you see -ase, it is an enzyme.' },
+  { cat: 'Suffixes', q: 'The suffix "-oma" indicates:', opts: ['Inflammation', 'Breakdown', 'Tumor or mass', 'Enzyme'], ans: 2, exp: '-Oma comes from Greek and indicates a tumor or swelling. Melanoma (tumor of melanocytes), lymphoma (tumor of lymph tissue), carcinoma (malignant tumor).' },
+  { cat: 'Suffixes', q: 'What does "-ology" mean?', opts: ['Measurement of', 'Study of', 'Disease of', 'Cell of'], ans: 1, exp: '-Ology comes from Greek logos, meaning word, reason, or study. Biology (study of life), neurology (study of nerves), pathology (study of disease).' },
+  { cat: 'Suffixes', q: 'The suffix "-cyte" means:', opts: ['Enzyme', 'Cell', 'Tissue', 'Organ'], ans: 1, exp: '-Cyte comes from Greek kytos, meaning cell. Leukocyte (white cell), erythrocyte (red cell), hepatocyte (liver cell), osteocyte (bone cell).' },
+  { cat: 'Suffixes', q: 'A word ending in "-pathy" refers to:', opts: ['A cell type', 'A surgical procedure', 'A disease or disorder', 'A diagnostic test'], ans: 2, exp: '-Pathy comes from Greek pathos, meaning suffering or disease. Neuropathy (nerve disease), cardiomyopathy (heart muscle disease), nephropathy (kidney disease).' },
+  { cat: 'Suffixes', q: 'The suffix "-emia" refers to:', opts: ['A condition in muscle', 'A blood condition', 'A lung condition', 'A skin condition'], ans: 1, exp: '-Emia comes from Greek haima, meaning blood. Anemia (lack of blood/red cells), leukemia (white blood cell cancer), septicemia (bacteria in blood).' },
+  { cat: 'Suffixes', q: 'What does "-lysis" mean as a suffix?', opts: ['Production of', 'Study of', 'Breakdown of', 'Inflammation of'], ans: 2, exp: '-Lysis means breaking down or dissolving. Hydrolysis (broken down by water), glycolysis (sugar breakdown), hemolysis (blood cell breakdown).' },
+  // WORD DECODING
+  { cat: 'Decoding', q: 'Break down "leukocyte." Leuko = white, -cyte = cell. What is a leukocyte?', opts: ['A red blood cell', 'A white blood cell', 'A platelet', 'A plasma protein'], ans: 1, exp: 'Leuko (white) + cyte (cell) = white blood cell. Leukocytes are the immune cells in your blood.' },
+  { cat: 'Decoding', q: 'Break down "bradycardia." Brady = slow, cardio = heart, -ia = condition. What is bradycardia?', opts: ['Fast heart rate', 'Abnormal heart rhythm', 'Slow heart rate', 'Heart inflammation'], ans: 2, exp: 'Brady (slow) + cardio (heart) + ia (condition) = condition of a slow heart rate, typically defined as below 60 beats per minute at rest.' },
+  { cat: 'Decoding', q: 'What would "thermolysis" mean? Thermo = heat, -lysis = breakdown.', opts: ['Measurement of heat', 'Breakdown by heat', 'Production of heat', 'Study of heat'], ans: 1, exp: 'Thermo (heat) + lysis (breakdown) = decomposition caused by heat. A substance undergoes thermolysis when heat causes it to break apart into simpler components.' },
+  { cat: 'Decoding', q: 'What is "endocytosis"? Endo = within, cyto = cell, -osis = process.', opts: ['A cell releasing contents outward', 'A cell taking material in from outside', 'Cell division', 'Cell death'], ans: 1, exp: 'Endo (within) + cyto (cell) + osis (process) = the process of a cell drawing material from outside into itself by engulfing it. The opposite is exocytosis.' },
+  { cat: 'Decoding', q: 'Decode "polysaccharide." Poly = many, sacchar = sugar, -ide = chemical compound.', opts: ['A single sugar molecule', 'A molecule of two sugars', 'A large molecule made of many sugar units', 'A fat molecule'], ans: 2, exp: 'Poly (many) + sacchar (sugar) + ide (compound) = a carbohydrate made of many sugar units. Starch, glycogen, and cellulose are polysaccharides.' },
+  { cat: 'Decoding', q: 'What does "phospholipid" suggest? Phospho = phosphate group, lip = fat, -id = substance.', opts: ['A molecule made of sugars', 'A molecule that contains both a phosphate group and a fatty acid', 'A protein attached to a cell membrane', 'An enzyme that breaks down fat'], ans: 1, exp: 'Phospho (phosphate) + lip (fat) + id (substance) = a molecule with a phosphate head and fatty acid tails. Phospholipids form the bilayer of cell membranes.' },
+  { cat: 'Decoding', q: 'What is "erythropoiesis"? Erythro = red, poiesis = making/production.', opts: ['Destruction of red blood cells', 'Production of red blood cells', 'Red blood cell disease', 'Transport of red blood cells'], ans: 1, exp: 'Erythro (red) + poiesis (production) = the production of red blood cells. This occurs primarily in bone marrow and is stimulated by the hormone erythropoietin.' },
+  { cat: 'Decoding', q: 'What does "hydrophilic" mean? Hydro = water, -philic = attracted to.', opts: ['Repelled by water', 'Attracted to water; water-soluble', 'Broken down by water', 'Made of water'], ans: 1, exp: 'Hydro (water) + philic (loving/attracted to) = water-loving. Hydrophilic molecules dissolve readily in water. Polar molecules are hydrophilic.' },
+  { cat: 'Decoding', q: 'Break down "osteoporosis." Osteo = bone, por = pore/opening, -osis = condition.', opts: ['Bone infection', 'Bone cancer', 'A condition of porous, weakened bone', 'Bone overgrowth'], ans: 2, exp: 'Osteo (bone) + poros (pore) + osis (condition) = a condition in which bone becomes porous and fragile due to loss of density. Common in aging populations.' },
+  { cat: 'Decoding', q: 'What is "tachypnea"? Tachy = fast, pnea = breathing.', opts: ['Slow breathing rate', 'Painful breathing', 'Absence of breathing', 'Abnormally fast breathing rate'], ans: 3, exp: 'Tachy (fast) + pnea (breathing) = abnormally fast breathing. A respiratory rate above about 20 breaths per minute in adults is considered tachypnea.' },
+  { cat: 'Decoding', q: 'What does "glycolysis" mean? Glyco = sugar, -lysis = breakdown.', opts: ['The building of glucose', 'The breakdown of glucose to produce energy', 'The storage of glucose as glycogen', 'The transport of glucose across a membrane'], ans: 1, exp: 'Glyco (sugar) + lysis (breakdown) = the breakdown of glucose. Glycolysis is the first stage of cellular respiration, converting glucose into pyruvate and producing ATP.' },
+];
+
+let qIdx = 0, qScore = 0, answered = false, quizStarted = false, shuffled = [];
+function shuffle(a) { return [...a].sort(() => Math.random() - 0.5); }
+
+function startQuiz() {
+  shuffled = shuffle(questions); qIdx = 0; qScore = 0; answered = false; quizStarted = true;
+  document.getElementById('quiz-final').classList.remove('show');
+  document.getElementById('quiz-active').style.display = '';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = shuffled[qIdx];
+  document.getElementById('q-question').textContent = q.q;
+  document.getElementById('q-score').textContent = `Score: ${qScore} / ${qIdx}`;
+  document.getElementById('q-progress').textContent = `Question ${qIdx + 1} of ${shuffled.length}`;
+  document.getElementById('q-bar').style.width = ((qIdx / shuffled.length) * 100) + '%';
+  const opts = document.getElementById('q-options');
+  opts.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(i);
+    opts.appendChild(btn);
+  });
+  document.getElementById('q-explanation').classList.remove('show');
+  document.getElementById('q-next').disabled = true;
+  answered = false;
+}
+
+function selectAnswer(i) {
+  if (answered) return;
+  answered = true;
+  const q = shuffled[qIdx];
+  const btns = document.querySelectorAll('.quiz-option');
+  btns.forEach(b => b.disabled = true);
+  btns[i].classList.add(i === q.ans ? 'correct' : 'wrong');
+  if (i !== q.ans) btns[q.ans].classList.add('correct');
+  if (i === q.ans) qScore++;
+  const exp = document.getElementById('q-explanation');
+  exp.textContent = q.exp;
+  exp.classList.add('show');
+  document.getElementById('q-next').disabled = false;
+  document.getElementById('q-score').textContent = `Score: ${qScore} / ${qIdx + 1}`;
+}
+
+function nextQuestion() {
+  qIdx++;
+  if (qIdx >= shuffled.length) showFinal();
+  else renderQuestion();
+}
+
+function showFinal() {
+  document.getElementById('quiz-active').style.display = 'none';
+  const pct = Math.round((qScore / shuffled.length) * 100);
+  document.getElementById('final-score').textContent = `${qScore} / ${shuffled.length}`;
+  const msgs = [
+    [0, 49, "Keep going. Work through the Roots, Prefixes, and Suffixes tabs again and use the flashcards daily for a week. These patterns will start to click."],
+    [50, 69, "Good foundation. Review the categories where you missed questions and practice with the flashcards until those roots feel immediate."],
+    [70, 84, "Strong work. You are developing real pattern recognition. Focus on the decoding section and try applying these skills to words in your textbooks."],
+    [85, 100, "Excellent. You have internalized the system. The next step is applying it actively every time you encounter an unfamiliar term in your coursework."]
+  ];
+  document.getElementById('final-msg').textContent = msgs.find(m => pct >= m[0] && pct <= m[1])[2];
+  document.getElementById('quiz-final').classList.add('show');
+}
+
+// ═══ FLASHCARDS ═══
+const cards = [
+  // Roots: Body
+  { cat: 'Roots: Body', front: 'bio', back: 'life\n\nbiology, biome, antibiotic, symbiosis' },
+  { cat: 'Roots: Body', front: 'cyt / cyto', back: 'cell\n\ncytoplasm, leukocyte, erythrocyte, cytology' },
+  { cat: 'Roots: Body', front: 'hist / histo', back: 'tissue\n\nhistology, histamine' },
+  { cat: 'Roots: Body', front: 'nucle', back: 'nucleus, kernel\n\nnucleus, nucleotide, nuclear' },
+  { cat: 'Roots: Body', front: 'soma / somat', back: 'body\n\nsomatic cell, chromosome, psychosomatic' },
+  { cat: 'Roots: Body', front: 'gen', back: 'origin, produce\n\ngene, genetics, carcinogen, oxygen' },
+  { cat: 'Roots: Body', front: 'chrom', back: 'color\n\nchromosome, chromatin, chromophore' },
+  { cat: 'Roots: Organs', front: 'cardio', back: 'heart\n\ncardiology, cardiac, tachycardia, pericardium' },
+  { cat: 'Roots: Organs', front: 'hepat', back: 'liver\n\nhepatitis, hepatocyte, hepatology' },
+  { cat: 'Roots: Organs', front: 'nephr / ren', back: 'kidney\n\nnephron, nephritis, renal, adrenal' },
+  { cat: 'Roots: Organs', front: 'neur / neuro', back: 'nerve\n\nneuron, neurotransmitter, neuropathy' },
+  { cat: 'Roots: Organs', front: 'osteo', back: 'bone\n\nosteoporosis, osteoblast, osteocyte' },
+  { cat: 'Roots: Organs', front: 'myo', back: 'muscle\n\nmyocardium, myosin, myopathy' },
+  { cat: 'Roots: Organs', front: 'hem / hemat', back: 'blood\n\nhemoglobin, hematology, hemorrhage' },
+  { cat: 'Roots: Organs', front: 'derm / dermat', back: 'skin\n\ndermatology, epidermis, hypodermic' },
+  { cat: 'Roots: Organs', front: 'gastr', back: 'stomach\n\ngastric, gastritis, gastroenterology' },
+  { cat: 'Roots: Chemistry', front: 'hydro / hydr', back: 'water\n\nhydrolysis, dehydration, hydrogen, hydrophobic' },
+  { cat: 'Roots: Chemistry', front: 'therm', back: 'heat\n\nthermodynamics, exothermic, endothermic' },
+  { cat: 'Roots: Chemistry', front: 'photo', back: 'light\n\nphotosynthesis, photon, photolysis' },
+  { cat: 'Roots: Chemistry', front: 'electr', back: 'electricity\n\nelectron, electrolyte, electronegativity' },
+  { cat: 'Roots: Chemistry', front: 'glyco / gluco', back: 'sugar, sweet\n\nglucose, glycogen, glycolysis, glycoprotein' },
+  { cat: 'Roots: Chemistry', front: 'lip / lipo', back: 'fat\n\nlipid, phospholipid, lipolysis, lipoprotein' },
+  { cat: 'Roots: Chemistry', front: 'ox / oxy', back: 'oxygen\n\noxidation, peroxide, deoxyribose' },
+  { cat: 'Roots: Chemistry', front: 'lysis / lyto', back: 'breakdown, dissolve\n\nhydrolysis, glycolysis, electrolyte, catalysis' },
+  { cat: 'Prefixes', front: 'hyper-', back: 'above, excessive\n\nhypertension, hyperglycemia, hypertrophic' },
+  { cat: 'Prefixes', front: 'hypo-', back: 'below, under\n\nhypotension, hypoglycemia, hypothermia' },
+  { cat: 'Prefixes', front: 'intra-', back: 'within, inside\n\nintracellular, intravenous, intramuscular' },
+  { cat: 'Prefixes', front: 'inter-', back: 'between\n\nintercellular, interstitial, interneuron' },
+  { cat: 'Prefixes', front: 'extra- / exo-', back: 'outside, beyond\n\nextracellular, exocytosis, exoskeleton' },
+  { cat: 'Prefixes', front: 'endo-', back: 'within, inner\n\nendocytosis, endoplasmic, endothelium' },
+  { cat: 'Prefixes', front: 'poly-', back: 'many\n\npolymer, polysaccharide, polymerase' },
+  { cat: 'Prefixes', front: 'mono-', back: 'one, single\n\nmonosaccharide, monomer, monoxide' },
+  { cat: 'Prefixes', front: 'a- / an-', back: 'without, not\n\nanaerobic, anemia, atrophy, apoptosis' },
+  { cat: 'Prefixes', front: 'anti-', back: 'against\n\nantibiotic, antibody, antioxidant' },
+  { cat: 'Prefixes', front: 'de-', back: 'remove, reverse\n\ndehydration, denaturation, deoxyribose' },
+  { cat: 'Prefixes', front: 'tachy-', back: 'fast\n\ntachycardia, tachypnea' },
+  { cat: 'Prefixes', front: 'brady-', back: 'slow\n\nbradycardia, bradypnea' },
+  { cat: 'Prefixes', front: 'peri-', back: 'around\n\npericardium, periosteum, peripheral' },
+  { cat: 'Prefixes', front: 'epi-', back: 'upon, over\n\nepidermis, epigenetics, epithelium' },
+  { cat: 'Prefixes', front: 'trans-', back: 'across, through\n\ntransmembrane, transcription, transport' },
+  { cat: 'Suffixes', front: '-itis', back: 'inflammation of\n\nhepatitis, nephritis, appendicitis, gastritis' },
+  { cat: 'Suffixes', front: '-ase', back: 'enzyme\n\nlipase, protease, polymerase, nuclease' },
+  { cat: 'Suffixes', front: '-oma', back: 'tumor, mass\n\nmelanoma, lymphoma, carcinoma' },
+  { cat: 'Suffixes', front: '-ology', back: 'study of\n\nbiology, neurology, pathology, ecology' },
+  { cat: 'Suffixes', front: '-cyte', back: 'cell\n\nleukocyte, erythrocyte, hepatocyte' },
+  { cat: 'Suffixes', front: '-pathy', back: 'disease of\n\nneuropathy, cardiomyopathy, nephropathy' },
+  { cat: 'Suffixes', front: '-emia', back: 'blood condition\n\nanemia, leukemia, hyperglycemia, septicemia' },
+  { cat: 'Suffixes', front: '-lysis', back: 'breakdown of\n\nhydrolysis, glycolysis, hemolysis' },
+  { cat: 'Suffixes', front: '-osis', back: 'condition, process\n\nfibrosis, thrombosis, necrosis, acidosis' },
+  { cat: 'Suffixes', front: '-philic', back: 'attracted to, loving\n\nhydrophilic, lipophilic (water-loving, fat-loving)' },
+  { cat: 'Suffixes', front: '-phobic', back: 'repelled by\n\nhydrophobic, lipophobic (water-repelling)' },
+  { cat: 'Suffixes', front: '-some', back: 'body, structure\n\nchromosome, ribosome, lysosome' },
+  { cat: 'Suffixes', front: '-gen / -genic', back: 'producing, causing\n\ncarcinogen, mutagen, pathogen' },
+  { cat: 'Suffixes', front: '-algia', back: 'pain\n\nneuralgia, myalgia, fibromyalgia' },
+];
+
+const catNames = ['All', ...new Set(cards.map(c => c.cat))];
+let fcCat = 'All', fcDeck = [], fcIdx = 0, fcFlipped = false;
+
+function buildFilters() {
+  const wrap = document.getElementById('fc-filters');
+  wrap.innerHTML = '';
+  catNames.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'fc-filter' + (cat === fcCat ? ' active' : '');
+    btn.textContent = cat;
+    btn.onclick = () => {
+      fcCat = cat;
+      document.querySelectorAll('.fc-filter').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      fcDeck = fcCat === 'All' ? shuffle(cards) : shuffle(cards.filter(c => c.cat === fcCat));
+      fcIdx = 0; fcFlipped = false;
+      renderCard();
+    };
+    wrap.appendChild(btn);
+  });
+  const count = document.createElement('div');
+  count.className = 'fc-count'; count.id = 'fc-count-lbl';
+  wrap.appendChild(count);
+}
+
+function renderCard() {
+  if (!fcDeck.length) fcDeck = fcCat === 'All' ? shuffle(cards) : shuffle(cards.filter(c => c.cat === fcCat));
+  const c = fcDeck[fcIdx];
+  document.getElementById('fc-front-text').textContent = c.front;
+  document.getElementById('fc-back-text').textContent = c.back;
+  document.getElementById('fc-pos').textContent = `${fcIdx + 1} / ${fcDeck.length}`;
+  const lbl = document.getElementById('fc-count-lbl');
+  if (lbl) lbl.textContent = fcDeck.length + ' cards';
+  document.getElementById('fc-card').classList.remove('flipped');
+  fcFlipped = false;
+}
+
+function flipCard() {
+  fcFlipped = !fcFlipped;
+  document.getElementById('fc-card').classList.toggle('flipped', fcFlipped);
+}
+
+function fcNav(dir) {
+  fcIdx = (fcIdx + dir + fcDeck.length) % fcDeck.length;
+  fcFlipped = false;
+  renderCard();
+}
+
+fcDeck = shuffle(cards);
+buildFilters();
+</script>
+</body>
+</html>
