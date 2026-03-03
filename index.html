@@ -330,9 +330,40 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); line
   .hero h1 { font-size: 1.7rem; }
   .tab-btn { font-size: 0.72rem; padding: 0.35rem 0.55rem; }
 }
+
+/* ─── WCAG 2.1 AA: Visible focus indicators ─── */
+:focus-visible {
+  outline: 3px solid #005fcc !important;
+  outline-offset: 2px !important;
+}
+.tab-btn:focus-visible, .nav-btn:focus-visible {
+  outline: 3px solid #005fcc !important;
+  outline-offset: 2px !important;
+}
+/* ─── Skip link ─── */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  background: #005fcc;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0 0 6px 6px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  z-index: 9999;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 0;
+}
+
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 
 <div class="series-banner">Foundations: Closing the Gap &nbsp;&mdash;&nbsp; <span>Scientific Vocabulary as a Language System</span></div>
 
@@ -342,21 +373,21 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); line
   <div class="byline">You were not taught how to read science words. That gap is smaller than you think, and it closes fast.</div>
 </div>
 
-<nav class="tab-nav" id="tabNav">
-  <button class="tab-btn active" data-tab="start">Start Here</button>
-  <button class="tab-btn" data-tab="howwords">How Words Work</button>
-  <button class="tab-btn" data-tab="roots">Latin &amp; Greek Roots</button>
-  <button class="tab-btn" data-tab="prefixes">Prefixes</button>
-  <button class="tab-btn" data-tab="suffixes">Suffixes</button>
-  <button class="tab-btn" data-tab="decode">Decode Anything</button>
-  <button class="tab-btn" data-tab="quiz">Quiz</button>
-  <button class="tab-btn" data-tab="flashcards">Flashcards</button>
+<nav class="tab-nav" role="tablist" aria-label="Page sections" id="tabNav">
+  <button role="tab" aria-selected="true" aria-controls="panel-start" class="tab-btn active" data-tab="start">Start Here</button>
+  <button role="tab" aria-selected="false" aria-controls="panel-howwords" class="tab-btn" data-tab="howwords">How Words Work</button>
+  <button role="tab" aria-selected="false" aria-controls="panel-roots" class="tab-btn" data-tab="roots">Latin &amp; Greek Roots</button>
+  <button role="tab" aria-selected="false" aria-controls="panel-prefixes" class="tab-btn" data-tab="prefixes">Prefixes</button>
+  <button role="tab" aria-selected="false" aria-controls="panel-suffixes" class="tab-btn" data-tab="suffixes">Suffixes</button>
+  <button role="tab" aria-selected="false" aria-controls="panel-decode" class="tab-btn" data-tab="decode">Decode Anything</button>
+  <button role="tab" aria-selected="false" aria-controls="panel-quiz" class="tab-btn" data-tab="quiz">Quiz</button>
+  <button role="tab" aria-selected="false" aria-controls="panel-flashcards" class="tab-btn" data-tab="flashcards">Flashcards</button>
 </nav>
 
-<div class="container">
+<div class="container" id="main-content" role="main">
 
 <!-- ═══════ START HERE ═══════ -->
-<div class="tab-panel active" id="panel-start">
+<div class="tab-panel active" id="panel-start" role="tabpanel" aria-labelledby="btn-start">
 
   <div class="disclaimer-wrap" id="disc">
     <div class="disclaimer-toggle" onclick="toggleDisc()">
@@ -439,7 +470,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); line
 </div>
 
 <!-- ═══════ HOW WORDS WORK ═══════ -->
-<div class="tab-panel" id="panel-howwords">
+<div class="tab-panel" id="panel-howwords" role="tabpanel" aria-labelledby="btn-howwords">
 
   <div class="card">
     <h2>How Scientific Words Are Built</h2>
@@ -510,7 +541,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); line
 </div>
 
 <!-- ═══════ ROOTS ═══════ -->
-<div class="tab-panel" id="panel-roots">
+<div class="tab-panel" id="panel-roots" role="tabpanel" aria-labelledby="btn-roots">
 
   <div class="card">
     <h2>Latin and Greek Roots</h2>
@@ -619,7 +650,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); line
 </div>
 
 <!-- ═══════ PREFIXES ═══════ -->
-<div class="tab-panel" id="panel-prefixes">
+<div class="tab-panel" id="panel-prefixes" role="tabpanel" aria-labelledby="btn-prefixes">
 
   <div class="card">
     <h2>Scientific Prefixes</h2>
@@ -704,7 +735,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); line
 </div>
 
 <!-- ═══════ SUFFIXES ═══════ -->
-<div class="tab-panel" id="panel-suffixes">
+<div class="tab-panel" id="panel-suffixes" role="tabpanel" aria-labelledby="btn-suffixes">
 
   <div class="card">
     <h2>Scientific Suffixes</h2>
@@ -794,7 +825,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); line
 </div>
 
 <!-- ═══════ DECODE ANYTHING ═══════ -->
-<div class="tab-panel" id="panel-decode">
+<div class="tab-panel" id="panel-decode" role="tabpanel" aria-labelledby="btn-decode">
 
   <div class="card">
     <h2>How to Decode Any Unfamiliar Scientific Word</h2>
@@ -892,7 +923,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); line
 </div>
 
 <!-- ═══════ QUIZ ═══════ -->
-<div class="tab-panel" id="panel-quiz">
+<div class="tab-panel" id="panel-quiz" role="tabpanel" aria-labelledby="btn-quiz">
   <div class="quiz-container">
     <div id="quiz-active">
       <div class="quiz-header">
@@ -917,7 +948,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); line
 </div>
 
 <!-- ═══════ FLASHCARDS ═══════ -->
-<div class="tab-panel" id="panel-flashcards">
+<div class="tab-panel" id="panel-flashcards" role="tabpanel" aria-labelledby="btn-flashcards">
   <div class="card" style="padding-bottom:1rem;">
     <h2>Flashcards</h2>
     <p>Click a card to flip it. Filter by category to focus on a specific group of roots. The goal is to reach the point where a root's meaning surfaces in under two seconds.</p>
